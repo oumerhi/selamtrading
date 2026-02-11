@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selam Trading | Global Sourcing Partner</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="image/favicon.png" type="image/png" sizes = "4x4">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#5D101D',   
+                            redLight: '#7A1A2A',
+                            cream: '#F9F7F2', 
+                            gold: '#C5A065',
+                            dark: '#1A0508',  
+                            gray: '#8C8C8C'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        serif: ['DM Serif Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #F9F7F2; }
+
+        /* Animation Utilities */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Marquee Animation */
+        .marquee-container {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, #a5131f, black 10%, black 90%, #a5131f);
+        }
+        
+        .marquee-content {
+            display: flex;
+            width: max-content;
+            animation: scroll 25s linear infinite;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Glassmorphism & Buttons */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .glass-dark {
+            background: rgba(26, 5, 8, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(93, 16, 29, 0.3);
+        }
+        .logo-sm {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            letter-spacing: -3px;
+        }
+
+        /* Media Center Specific Styles */
+        .gallery-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .play-btn {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .gallery-card:hover .play-btn {
+            transform: scale(1.2);
+        }
+        .tab-btn.active {
+            background-color: #5D101D; /* Brand Red */
+            color: #F9F7F2; /* Brand Cream */
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F9F7F2; }
+        ::-webkit-scrollbar-thumb { background: #5D101D; border-radius: 4px; }
+    </style>
+</head>
+<body class="text-brand-dark antialiased overflow-x-hidden">
+
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-4 transition-all duration-300" id="navbar">
+    <div class="max-w-[1400px] mx-auto glass rounded-full px-6 md:px-8 py-3 md:py-4 flex justify-between items-center shadow-lg relative z-50">
+        
+        <a href="#" class="flex items-center gap-3 group">
+            <img src="image/logo-removebg-preview.png"  alt="Selam Trading Logo" class="h-10 md:h-12 w-auto object-contain">
+            <div class="hidden md:block leading-none">
+                <p class="font-serif text-xl text-brand-red">Selam</p>
+                <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gold font-bold">Trading Limited</p>
+            </div>
+        </a>
+
+        <div class="hidden md:flex items-center gap-10">
+            <a href="#about" class="text-sm font-semibold tracking-wide hover:text-brand-red transition">ABOUT</a>
+            <a href="#services" class="text-sm font-semibold tracking-wide hover:text-brand-red transition">SERVICES</a>
+            <a href="#gallery" class="text-sm font-semibold tracking-wide hover:text-brand-red transition">MEDIA</a>
+            <a href="#contact" class="px-8 py-3 bg-brand-dark text-white rounded-full text-sm font-bold tracking-wide btn-hover flex items-center gap-2 group">
+                GET A QUOTE
+            </a>
+        </div>
+
+        <button id="menu-btn" class="md:hidden text-2xl text-brand-dark p-2 focus:outline-none">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-dark z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 translate-x-full md:hidden">
+        <a href="#about" class="mobile-link text-white text-3xl font-serif">About</a>
+        <a href="#services" class="mobile-link text-white text-3xl font-serif">Services</a>
+        <a href="#gallery" class="mobile-link text-white text-3xl font-serif">Media</a>
+        <a href="#contact" class="mobile-link px-10 py-4 bg-brand-gold text-brand-dark font-bold rounded-full">Get a Quote</a>
+        
+        <button id="menu-close" class="absolute top-10 right-10 text-white text-4xl">&times;</button>
+    </div>
+</nav>
+
+    <header class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-red/90 via-brand-dark/80 to-brand-dark z-10 mix-blend-multiply"></div>
+            <img src="https://images.unsplash.com/photo-1494412574643-35d324698428?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80" class="w-full h-full object-cover animate-[pulse_20s_ease-in-out_infinite] scale-105" style="animation-name: slowZoom;">
+        </div>
+        <style>@keyframes slowZoom { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }</style>
+
+        <div class="relative z-20 container mx-auto px-6 text-center max-w-5xl mt-16">
+            <div class="reveal active transition-all duration-1000">
+                <span class="inline-block py-1 px-3 rounded-full border border-brand-gold/50 text-brand-gold text-xs font-bold tracking-[0.2em] mb-6 uppercase backdrop-blur-sm">Based in Yiwu, China</span>
+                <h1 class="font-serif text-5xl md:text-8xl lg:text-9xl text-brand-cream leading-[0.9] mb-8">
+                    Sourcing <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-white">Redefined.</span>
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed mb-12">
+                    We bridge the gap between global businesses and Chinese manufacturing. Reliable sourcing, strict quality control, and seamless logistics.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
+                    <a href="#contact" class="px-10 py-5 bg-brand-gold text-brand-dark font-bold text-lg rounded-full btn-hover shadow-[0_0_40px_-10px_rgba(197,160,101,0.5)]">Start Sourcing</a>
+                    <a href="#services" class="px-10 py-5 border border-white/20 text-white font-bold text-lg rounded-full hover:bg-white/10 transition backdrop-blur-sm flex items-center justify-center gap-3">
+                        <i class="fas fa-play-circle text-xl"></i> See How We Work
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce flex flex-col items-center gap-2">
+            <span class="text-[10px] tracking-widest uppercase">Scroll</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <div class="bg-brand-dark border-b border-white/5 py-6 md:py-8 overflow-hidden relative z-20 marquee-container">
+        <div class="marquee-content gap-12 md:gap-24 opacity-70">
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-shipping-fast text-brand-gold"></i> Logistics</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-check-double text-brand-gold"></i> Quality Control</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-industry text-brand-gold"></i> Factory Direct</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-handshake text-brand-gold"></i> Negotiation</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-globe-asia text-brand-gold"></i> Global Trade</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-shipping-fast text-brand-gold"></i> Logistics</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-check-double text-brand-gold"></i> Quality Control</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-industry text-brand-gold"></i> Factory Direct</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-handshake text-brand-gold"></i> Negotiation</span>
+            <span class="text-xl md:text-3xl font-serif text-white flex items-center gap-3"><i class="fas fa-globe-asia text-brand-gold"></i> Global Trade</span>
+        </div>
+    </div>
+
+    <section id="about" class="py-20 md:py-32 px-6 container mx-auto max-w-[1400px]">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
+            
+            <div class="reveal lg:pl-20">
+                <h2 class="font-serif text-5xl md:text-7xl text-brand-dark mb-8 leading-none">
+                    Your Eyes & Ears <br><span class="italic text-brand-red">in China.</span>
+                </h2>
+                <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+                    Based in the heart of the Yiwu International Trade City, we are more than just a sourcing agency. We are your strategic partner on the ground.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-brand-cream flex items-center justify-center text-brand-red text-xl flex-shrink-0 shadow-sm"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-1 text-brand-dark">Risk Elimination</h4>
+                            <p class="text-gray-500 text-sm">We verify supplier licenses and physicality before payments.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-brand-cream flex items-center justify-center text-brand-red text-xl flex-shrink-0 shadow-sm"><i class="fas fa-arrow-down"></i></div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-1 text-brand-dark">Lower Price</h4>
+                            <p class="text-gray-500 text-sm">Aggressive negotiation to maximize your profit margins.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-brand-cream flex items-center justify-center text-brand-red text-xl flex-shrink-0 shadow-sm"><i class="fas fa-coins"></i></div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-1 text-brand-dark">Factory Pricing</h4>
+                            <p class="text-gray-500 text-sm">Direct access to manufacturers with zero hidden fees.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-brand-cream flex items-center justify-center text-brand-red text-xl flex-shrink-0 shadow-sm"><i class="fas fa-plane-departure"></i></div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-1 text-brand-dark">Fast Shipment</h4>
+                            <p class="text-gray-500 text-sm">Optimized logistics routes for quicker delivery times.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="relative reveal delay-200">
+                <img src="https://images.unsplash.com/photo-1554252116-200508593cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="rounded-[2rem] w-full object-cover shadow-2xl relative z-10 hover:scale-[1.02] transition duration-700">
+                <div class="absolute -bottom-10 -left-10 z-20 glass-dark p-8 rounded-2xl max-w-xs shadow-xl hidden md:block">
+                    <div class="text-brand-gold text-4xl font-serif mb-2">6+ Years</div>
+                    <p class="text-gray-300 text-sm">Combined experience in international trade and logistics management.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="bg-brand-dark py-20 md:py-32 px-6 text-white rounded-t-[3rem] relative -mt-10 z-30">
+        <div class="container mx-auto max-w-[1400px]">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
+                <div>
+                    <span class="text-brand-gold tracking-widest uppercase text-sm font-bold">What We Do</span>
+                    <h2 class="font-serif text-5xl md:text-7xl mt-4">Comprehensive <br>Trade Solutions</h2>
+                </div>
+                <p class="text-gray-400 max-w-md text-lg mt-8 md:mt-0">From the first product search to the final container seal, we handle the complexity.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-2 bg-white/5 border border-white/10 p-8 md:p-10 rounded-[2rem] hover:bg-white/10 transition duration-500 group reveal cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-10 opacity-20 group-hover:scale-110 transition duration-500"><i class="fas fa-search text-9xl text-white"></i></div>
+                    <div class="relative z-10 h-full flex flex-col justify-end min-h-[300px]">
+                        <h3 class="text-3xl md:text-4xl font-serif mb-4 group-hover:text-brand-gold transition">Product Sourcing</h3>
+                        <p class="text-gray-400 text-lg max-w-lg">We utilize our massive local network in Yiwu and across China to find the exact product you need at the target price.</p>
+                        <div class="mt-8"><span class="text-sm font-bold uppercase tracking-widest border-b border-brand-gold pb-1">Learn More</span></div>
+                    </div>
+                </div>
+                <div class="md:row-span-2 bg-brand-red p-8 md:p-10 rounded-[2rem] hover:bg-brand-redLight transition duration-500 group reveal delay-100 flex flex-col justify-between">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-3xl text-white mb-6"><i class="fas fa-shipping-fast"></i></div>
+                    <div>
+                        <h3 class="text-3xl font-serif mb-4">Logistics & Shipping</h3>
+                        <p class="text-white/80 mb-6">Sea freight, air cargo, or rail. We handle consolidation, warehousing, and customs clearance documents.</p>
+                        <ul class="text-sm space-y-3 opacity-80">
+                            <li><i class="fas fa-check mr-2"></i> Container Booking</li>
+                            <li><i class="fas fa-check mr-2"></i> Custom Clearance</li>
+                            <li><i class="fas fa-check mr-2"></i> Door to Door</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white/5 border border-white/10 p-8 md:p-10 rounded-[2rem] hover:bg-white/10 transition duration-500 group reveal delay-200">
+                    <div class="w-14 h-14 bg-brand-gold text-brand-dark rounded-full flex items-center justify-center text-2xl mb-6"><i class="fas fa-clipboard-check"></i></div>
+                    <h3 class="text-2xl font-serif mb-2">Quality Control</h3>
+                    <p class="text-gray-400 text-sm">Strict inspections (Pre-production, During production, Pre-shipment) to ensure zero defects.</p>
+                </div>
+                <div class="bg-white/5 border border-white/10 p-8 md:p-10 rounded-[2rem] hover:bg-white/10 transition duration-500 group reveal delay-300">
+                    <div class="w-14 h-14 bg-brand-gold text-brand-dark rounded-full flex items-center justify-center text-2xl mb-6"><i class="fas fa-hand-holding-usd"></i></div>
+                    <h3 class="text-2xl font-serif mb-2">Price Negotiation</h3>
+                    <p class="text-gray-400 text-sm">Native Chinese speakers negotiating on your behalf to get the best MOQ and unit price.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="py-20 md:py-32 bg-brand-cream relative">
+        <div class="absolute top-20 left-0 w-64 h-64 bg-brand-gold/10 rounded-full blur-3xl"></div>
+        <div class="container mx-auto px-6 max-w-[1400px]">
+            <div class="text-center mb-16 md:mb-24 reveal">
+                <h2 class="font-serif text-5xl md:text-6xl text-brand-dark">How It Works</h2>
+            </div>
+            <div class="relative">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-200 -z-10 -translate-y-1/2"></div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-brand-red reveal hover:-translate-y-2 transition duration-300">
+                        <div class="w-12 h-12 bg-brand-dark text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 shadow-xl">1</div>
+                        <h4 class="text-xl font-bold mb-2 font-serif">Inquiry</h4>
+                        <p class="text-gray-500 text-sm">Send us your product requirements or images.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-brand-gold reveal delay-100 hover:-translate-y-2 transition duration-300">
+                        <div class="w-12 h-12 bg-brand-dark text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 shadow-xl">2</div>
+                        <h4 class="text-xl font-bold mb-2 font-serif">Sourcing</h4>
+                        <p class="text-gray-500 text-sm">We find suppliers and provide a detailed quote.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-brand-red reveal delay-200 hover:-translate-y-2 transition duration-300">
+                        <div class="w-12 h-12 bg-brand-dark text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 shadow-xl">3</div>
+                        <h4 class="text-xl font-bold mb-2 font-serif">Production</h4>
+                        <p class="text-gray-500 text-sm">Order placement, deposit, and quality supervision.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-brand-gold reveal delay-300 hover:-translate-y-2 transition duration-300">
+                        <div class="w-12 h-12 bg-brand-dark text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 shadow-xl">4</div>
+                        <h4 class="text-xl font-bold mb-2 font-serif">Shipping</h4>
+                        <p class="text-gray-500 text-sm">Final inspection, balance payment, and global delivery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="media-center" class="py-20 md:py-32 px-6 container mx-auto max-w-[1400px]">
+        <div class="text-center mb-12 reveal">
+            <span class="text-brand-gold tracking-widest uppercase text-sm font-bold">Gallery</span>
+            <h2 class="font-serif text-5xl md:text-6xl text-brand-dark mt-4">Media Center</h2>
+            <p class="text-gray-500 mt-4 max-w-lg mx-auto">Explore our workshops, factory visits, and company events.</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 reveal">
+            <div class="bg-white p-1.5 rounded-full shadow-sm border border-gray-100 flex">
+                <button onclick="switchTab('photos')" id="tab-photos" class="tab-btn active px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-300">Photos</button>
+                <button onclick="switchTab('videos')" id="tab-videos" class="tab-btn px-8 py-2.5 rounded-full text-sm font-bold text-gray-500 hover:text-brand-red transition-all duration-300">Videos</button>
+            </div>
+
+            <div id="photo-filters" class="relative group z-30">
+                <select onchange="filterGallery(this.value)" class="appearance-none bg-white border border-gray-200 text-gray-700 py-3 px-6 pr-10 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-gold cursor-pointer font-bold text-sm shadow-sm hover:shadow-md transition">
+                    <option value="all">All Albums</option>
+                    <option value="workshops">Workshops</option>
+                    <option value="factory">Factory Visits</option>
+                    <option value="events">Company Events</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-brand-dark">
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </div>
+            </div>
+        </div>
+
+        <div id="gallery-photos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 reveal">
+  <!-- Factory Visits -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="factory" onclick="openLightbox(0)">
+    <img src="image/Factory_2.jpg" alt="Factory Production Area" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Factory Visit</span>
+      <h3 class="text-white font-serif text-xl">Manufacturing Area and Workstations</h3>
+    </div>
+  </div>
+
+  <!-- Company Events -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="events" onclick="openLightbox(1)">
+    <img src="image/company.jpg" alt="Company Team Photo" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Company Event</span>
+      <h3 class="text-white font-serif text-xl">Team Group Photo During Visit</h3>
+    </div>
+  </div>
+
+  <!-- Company Events -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="events" onclick="openLightbox(2)">
+    <img src="image/railway.jpg" alt="Railway Station Travel" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Company Event</span>
+      <h3 class="text-white font-serif text-xl">Business Travel, Railway Station</h3>
+    </div>
+  </div>
+
+  <!-- Workshops -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="workshops" onclick="openLightbox(3)">
+    <img src="image/workshop 2.jpg" alt="Workshop Session" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Workshop</span>
+      <h3 class="text-white font-serif text-xl">Hands On Workshop Environment</h3>
+    </div>
+  </div>
+
+  <!-- Factory Visits -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="factory" onclick="openLightbox(4)">
+    <img src="image/factory_1.jpg" alt="Factory Floor Overview" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Factory Visit</span>
+      <h3 class="text-white font-serif text-xl">Factory Floor and Production Line</h3>
+    </div>
+  </div>
+
+  <!-- Factory Visits -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="factory" onclick="openLightbox(5)">
+    <img src="image/product show case.jpg" alt="Product Quality Check" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Factory Visit</span>
+      <h3 class="text-white font-serif text-xl">Product QA and Final Inspection</h3>
+    </div>
+  </div>
+
+  <!-- Factory Visits -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="factory" onclick="openLightbox(6)">
+    <img src="image/factory.jpg" alt="Factory Visit Setup" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Factory Visit</span>
+      <h3 class="text-white font-serif text-xl">On Site Factory Visit Overview</h3>
+    </div>
+  </div>
+
+  <!-- Workshops -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="workshops" onclick="openLightbox(7)">
+    <img src="image/workshop.jpg" alt="Workshop Work in Progress" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Workshop</span>
+      <h3 class="text-white font-serif text-xl">Workshop Production and Assembly</h3>
+    </div>
+  </div>
+
+  <!-- Company Events -->
+  <div class="gallery-card group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-md aspect-[4/3]" data-category="events" onclick="openLightbox(8)">
+    <img src="image/comapny 2.jpg" alt="Company Team Photo 2" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
+      <span class="text-brand-gold text-xs font-bold uppercase tracking-wider mb-1">Company Event</span>
+      <h3 class="text-white font-serif text-xl">Team Photo at Factory Visit</h3>
+    </div>
+  </div>
+</div>
+
+<div id="gallery-videos" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+  <!-- Workshops Video -->
+  <div class="gallery-card group relative rounded-2xl overflow-hidden cursor-pointer aspect-video shadow-lg" onclick="openVideoModal('image/workshop-vid.mp4')">
+    <img src="image/workshop 2.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100" alt="Workshop Video Thumbnail">
+    <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition">
+      <div class="play-btn w-16 h-16 bg-brand-red/90 text-white rounded-full flex items-center justify-center text-xl shadow-xl backdrop-blur-sm border border-white/20">
+        <i class="fas fa-play ml-1"></i>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent">
+      <h3 class="text-white font-serif text-lg">Workshop Operations Walkthrough</h3>
+    </div>
+  </div>
+
+  <!-- Factory Visit Video -->
+  <div class="gallery-card group relative rounded-2xl overflow-hidden cursor-pointer aspect-video shadow-lg" onclick="openVideoModal('image/factory-vis-vid.mp4')">
+    <img src="image/workshop.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100" alt="Factory Visit Video Thumbnail">
+    <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition">
+      <div class="play-btn w-16 h-16 bg-brand-red/90 text-white rounded-full flex items-center justify-center text-xl shadow-xl backdrop-blur-sm border border-white/20">
+        <i class="fas fa-play ml-1"></i>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent">
+      <h3 class="text-white font-serif text-lg">Factory Walkthrough During Visit</h3>
+    </div>
+  </div>
+
+  <!-- Factory Visit Video 2 -->
+  <div class="gallery-card group relative rounded-2xl overflow-hidden cursor-pointer aspect-video shadow-lg" onclick="openVideoModal('image/factory-vis2.mp4')">
+    <img src="image/Factory_2.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100" alt="Factory Visit Video Thumbnail 2">
+    <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition">
+      <div class="play-btn w-16 h-16 bg-brand-red/90 text-white rounded-full flex items-center justify-center text-xl shadow-xl backdrop-blur-sm border border-white/20">
+        <i class="fas fa-play ml-1"></i>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent">
+      <h3 class="text-white font-serif text-lg">Factory Visit Production Activity</h3>
+    </div>
+  </div>
+</div>
+</section>
+
+    <footer id="contact" class="bg-brand-dark text-white pt-20 md:pt-32 pb-10 rounded-t-[3rem] relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-red/20 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="container mx-auto px-6 max-w-[1400px] relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-20">
+                <div>
+                    <h2 class="font-serif text-6xl md:text-8xl mb-8 leading-tight">Let's Talk <br><span class="text-brand-gold">Business.</span></h2>
+                    <p class="text-xl text-gray-400 mb-12 max-w-md">Ready to scale your business with reliable Chinese sourcing? Contact us today.</p>
+                    <div class="space-y-8">
+                        <div class="flex items-center gap-6 group">
+                            <div class="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-2xl group-hover:bg-brand-gold group-hover:text-brand-dark transition duration-300"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <p class="text-sm text-gray-500 uppercase tracking-widest">Email</p>
+                                <p class="text-xl md:text-2xl font-serif">info@selamtrading.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6 group">
+                            <div class="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-2xl group-hover:bg-green-500 group-hover:text-white transition duration-300"><i class="fab fa-whatsapp"></i></div>
+                            <div>
+                                <p class="text-sm text-gray-500 uppercase tracking-widest">WhatsApp / Mobile</p>
+                                <p class="text-xl md:text-2xl font-serif">+86 158 8899 2714</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6 group">
+                            <div class="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-2xl group-hover:bg-blue-500 group-hover:text-white transition duration-300"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <p class="text-sm text-gray-500 uppercase tracking-widest">Location</p>
+                                <p class="text-lg text-gray-300">Block 11, Room 301, Nian Xi New Village,<br>Yiwu, Zhejiang, China</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white text-brand-dark p-8 md:p-14 rounded-[2.5rem] shadow-2xl reveal">
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold uppercase tracking-wide mb-2">Name</label>
+                                <input type="text" class="w-full bg-brand-cream border-0 p-4 rounded-xl focus:ring-2 focus:ring-brand-gold outline-none" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold uppercase tracking-wide mb-2">Phone</label>
+                                <input type="text" class="w-full bg-brand-cream border-0 p-4 rounded-xl focus:ring-2 focus:ring-brand-gold outline-none" placeholder="+1 234...">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold uppercase tracking-wide mb-2">Email</label>
+                            <input type="email" class="w-full bg-brand-cream border-0 p-4 rounded-xl focus:ring-2 focus:ring-brand-gold outline-none" placeholder="john@company.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold uppercase tracking-wide mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-brand-cream border-0 p-4 rounded-xl focus:ring-2 focus:ring-brand-gold outline-none" placeholder="Product details, quantities, etc..."></textarea>
+                        </div>
+                        <button class="w-full py-5 bg-brand-red text-white font-bold text-lg rounded-xl hover:bg-brand-dark transition duration-300 shadow-lg">Send Request</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+                <p>&copy; 2026 Selam Trading Limited Company.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-brand-gold transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-brand-gold transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="lightbox-modal" class="fixed inset-0 z-[60] hidden bg-black/95 flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/50 hover:text-white text-4xl z-50 focus:outline-none"><i class="fas fa-times"></i></button>
+        <button onclick="changeSlide(-1)" class="absolute left-4 md:left-8 text-white/50 hover:text-white text-4xl p-4 z-50 focus:outline-none"><i class="fas fa-chevron-left"></i></button>
+        <button onclick="changeSlide(1)" class="absolute right-4 md:right-8 text-white/50 hover:text-white text-4xl p-4 z-50 focus:outline-none"><i class="fas fa-chevron-right"></i></button>
+        
+        <div class="relative max-w-5xl max-h-[85vh] w-full px-4 md:px-0 flex flex-col items-center">
+            <img id="lightbox-img" src="" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
+            <div class="mt-4 text-center">
+                <h3 id="lightbox-title" class="text-white font-serif text-2xl tracking-wide"></h3>
+                <span id="lightbox-category" class="text-brand-gold uppercase text-xs tracking-[0.2em] font-bold mt-2 block"></span>
+            </div>
+        </div>
+    </div>
+
+   <div id="video-modal" class="fixed inset-0 z-[60] hidden bg-black/95 flex items-center justify-center opacity-0 transition-opacity duration-300">
+  <button onclick="closeVideoModal()" class="absolute top-6 right-6 text-white/50 hover:text-white text-4xl z-50 focus:outline-none">
+    <i class="fas fa-times"></i>
+  </button>
+
+  <div class="w-full max-w-4xl px-4 md:px-0">
+    <video id="video-player" class="w-full rounded-2xl shadow-2xl border border-white/10 bg-black" controls playsinline></video>
+  </div>
+</div>
+
+    </div>
+
+    <script>
+        // Mobile Menu Logic
+const menuBtn = document.getElementById('menu-btn');
+const menuClose = document.getElementById('menu-close');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileLinks = document.querySelectorAll('.mobile-link');
+
+// Open Menu
+menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.remove('translate-x-full');
+});
+
+// Close Menu function
+function closeMenu() {
+    mobileMenu.classList.add('translate-x-full');
+}
+
+// Close on 'X' click
+menuClose.addEventListener('click', closeMenu);
+
+// Close menu when a link is clicked
+mobileLinks.forEach(link => {
+    link.addEventListener('click', closeMenu);
+});
+
+// Optional: Change Navbar background on scroll
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+        nav.classList.add('py-2');
+    } else {
+        nav.classList.remove('py-2');
+    }
+});
+        // Existing Observers
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2');
+            }
+        });
+
+        /* --- MEDIA CENTER LOGIC --- */
+
+        // 1. Tab Switching
+        function switchTab(tab) {
+            const photos = document.getElementById('gallery-photos');
+            const videos = document.getElementById('gallery-videos');
+            const btnPhotos = document.getElementById('tab-photos');
+            const btnVideos = document.getElementById('tab-videos');
+            const filters = document.getElementById('photo-filters');
+
+            if (tab === 'photos') {
+                photos.classList.remove('hidden');
+                photos.classList.add('grid');
+                videos.classList.add('hidden');
+                videos.classList.remove('grid');
+                
+                // Style buttons
+                btnPhotos.classList.add('active', 'text-brand-cream');
+                btnPhotos.classList.remove('text-gray-500');
+                btnVideos.classList.remove('active', 'text-brand-cream');
+                btnVideos.classList.add('text-gray-500');
+                
+                // Show filters
+                filters.style.visibility = 'visible';
+                filters.style.opacity = '1';
+            } else {
+                photos.classList.add('hidden');
+                photos.classList.remove('grid');
+                videos.classList.remove('hidden');
+                videos.classList.add('grid');
+
+                // Style buttons
+                btnVideos.classList.add('active', 'text-brand-cream');
+                btnVideos.classList.remove('text-gray-500');
+                btnPhotos.classList.remove('active', 'text-brand-cream');
+                btnPhotos.classList.add('text-gray-500');
+
+                // Hide filters
+                filters.style.visibility = 'hidden';
+                filters.style.opacity = '0';
+            }
+        }
+
+        // 2. Photo Filtering
+        function filterGallery(category) {
+            const items = document.querySelectorAll('#gallery-photos .gallery-card');
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                    // Re-trigger animation
+                    item.classList.remove('reveal', 'active');
+                    void item.offsetWidth; // trigger reflow
+                    item.classList.add('reveal', 'active');
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // 3. Photo Lightbox
+        let currentImageIndex = 0;
+        let visibleImages = []; // Array to store currently filtered images
+
+        function updateVisibleImages() {
+            // Get only images that are currently displayed based on filter
+            const allItems = Array.from(document.querySelectorAll('#gallery-photos .gallery-card'));
+            visibleImages = allItems.filter(item => item.style.display !== 'none');
+        }
+
+        function openLightbox(index) {
+            updateVisibleImages(); // Ensure we have the right list based on current filter
+            
+            // Find the clicked image in the visible array (mapping index is tricky if filtered, so we find by src match or pass element)
+            // Simpler approach: Re-map the index based on the clicked element
+            // But for this static example, we will just use the clicked element context:
+            
+            // Actually, let's grab the specific element clicked to find its index in the visible list
+            const clickedElement = document.querySelectorAll('#gallery-photos .gallery-card')[index];
+            currentImageIndex = visibleImages.indexOf(clickedElement);
+            
+            if(currentImageIndex === -1) {
+                // Fallback if filtering logic gets complex, just show the one clicked
+                // But normally this won't happen. Let's just reset to 0 if fails.
+                currentImageIndex = 0; 
+            }
+
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.remove('hidden');
+            // Small timeout to allow display:flex to apply before opacity transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+            
+            updateLightboxContent();
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeSlide(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex >= visibleImages.length) currentImageIndex = 0;
+            if (currentImageIndex < 0) currentImageIndex = visibleImages.length - 1;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            const item = visibleImages[currentImageIndex];
+            const img = item.querySelector('img');
+            const title = item.querySelector('h3').innerText;
+            const category = item.querySelector('span').innerText;
+
+            const lbImg = document.getElementById('lightbox-img');
+            const lbTitle = document.getElementById('lightbox-title');
+            const lbCat = document.getElementById('lightbox-category');
+
+            // Fade out slightly
+            lbImg.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                lbImg.src = img.src; // In a real app, use a data-full attribute for high-res
+                lbTitle.innerText = title;
+                lbCat.innerText = category;
+                lbImg.style.opacity = '1';
+            }, 200);
+        }
+
+        // 4. Video Modal
+       function openVideoModal(videoPath) {
+  const modal  = document.getElementById('video-modal');
+  const player = document.getElementById('video-player');
+
+  // Encode spaces and special characters (fixes "Invalid URL")
+  const safePath = videoPath;
+
+  player.src = safePath;
+  player.load();
+
+  modal.classList.remove('hidden');
+  setTimeout(() => modal.classList.remove('opacity-0'), 10);
+
+  document.body.style.overflow = 'hidden';
+
+  // Autoplay might be blocked by browser, that's fine
+  player.play().catch(() => {});
+}
+
+function closeVideoModal() {
+  const modal  = document.getElementById('video-modal');
+  const player = document.getElementById('video-player');
+
+  modal.classList.add('opacity-0');
+
+  setTimeout(() => {
+    modal.classList.add('hidden');
+
+    player.pause();
+    player.removeAttribute('src'); // stop video
+    player.load();
+  }, 300);
+
+  document.body.style.overflow = 'auto';
+}
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox-modal');
+            const videoModal = document.getElementById('video-modal');
+
+            if (!lightbox.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+                if (e.key === 'ArrowRight') changeSlide(1);
+            }
+            if (!videoModal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeVideoModal();
+            }
+        });
+    </script>
+</body>
+</html>
